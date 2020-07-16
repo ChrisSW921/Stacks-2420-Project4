@@ -47,12 +47,3 @@ class Stack:
         while not self.is_empty():
             self.pop()
 
-
-stack = Stack()
-stack.push(1)
-stack.push(2)
-stack.push(3)
-stack.push(4)
-stack.push(5)
-print(stack.pop())
-print(stack.pop())
