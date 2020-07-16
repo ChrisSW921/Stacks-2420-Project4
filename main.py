@@ -10,25 +10,40 @@ def in2post(exp):
         elif item == '(':
             stack.push(item)
         elif item in ['+', '-', '/', '*']:
-            while stack.top():
-                if stack.top() in ['+', '-'] and item in ['+', '-']:
-                    postfix += stack.top()
-                    stack.pop()
-                elif stack.top in ['*', '/'] and item in ['+', '-']:
-                    postfix += stack.top()
-                    stack.pop()
-                elif stack.top in ['*', '/'] and item in ['*', '/']:
-                    postfix += stack.top()
-                    stack.pop()
+            try:
+                while stack.top():
+                    if stack.top() in ['+', '-'] and item in ['+', '-']:
+                        postfix += stack.top()
+                        stack.pop()
+                    elif stack.top() in ['*', '/'] and item in ['+', '-']:
+                        postfix += stack.top()
+                        stack.pop()
+                    elif stack.top() in ['*', '/'] and item in ['*', '/']:
+                        postfix += stack.top()
+                        stack.pop()
+                    elif stack.top() in ['+', '-'] and item in ['*', "/"]:
+                        stack.push(item)
+                        break
+                    elif stack.top() == '(':
+                        stack.push(item)
+                        break
+            except IndexError:
+                stack.push(item)
         elif item == ')':
-            while stack.top() != '(':
-                postfix += stack.top()
-                stack.pop()
-            if stack.top() == '(':
-                stack.pop()
+            try:
+                while stack.top() != '(':
+                    postfix += stack.top()
+                    stack.pop()
+                else:
+                    stack.pop()
+            except IndexError:
+                pass
+    try:
         while stack.top():
             postfix += stack.top()
             stack.pop()
+    except IndexError:
+        print("OK")
     return postfix
 
 
