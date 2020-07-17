@@ -1,6 +1,5 @@
 import stack as st
 
-
 def in2post(expr):
     if not isinstance(expr, str):
         raise ValueError
@@ -39,7 +38,7 @@ def in2post(expr):
                 else:
                     stack.pop()
             except IndexError:
-                pass
+                raise SyntaxError
     try:
         while stack.top():
             postfix += f"{stack.top()} "
@@ -50,6 +49,8 @@ def in2post(expr):
 
 
 def eval_postfix(expr):
+    if not isinstance(expr, str):
+        raise ValueError
     stacky_boi = st.Stack()
     operands = ['+', '-', '/', '*']
     numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
@@ -57,8 +58,11 @@ def eval_postfix(expr):
         if thing in numbers:
             stacky_boi.push(thing)
         elif thing in operands:
-            num2 = int(stacky_boi.pop())
-            num1 = int(stacky_boi.pop())
+            try:
+                num2 = int(stacky_boi.pop())
+                num1 = int(stacky_boi.pop())
+            except IndexError:
+                raise SyntaxError
             if thing == '+':
                 result = num1 + num2
                 stacky_boi.push(result)
@@ -71,7 +75,7 @@ def eval_postfix(expr):
             elif thing == '/':
                 result = num1 / num2
                 stacky_boi.push(result)
-    return stacky_boi.pop()
+    return int(stacky_boi.pop())
 
 
 def main():
