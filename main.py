@@ -1,6 +1,11 @@
+"""Main module"""
+
+
 import stack as st
 
+
 def in2post(expr):
+    """Infix to postfix function"""
     if not isinstance(expr, str):
         raise ValueError
     stack = st.Stack()
@@ -49,6 +54,7 @@ def in2post(expr):
 
 
 def eval_postfix(expr):
+    """Evaluate postfix expression function"""
     if not isinstance(expr, str):
         raise ValueError
     stacky_boi = st.Stack()
@@ -79,6 +85,7 @@ def eval_postfix(expr):
 
 
 def main():
+    """Main function"""
     with open("data.txt", "r") as file:
         for line in file:
             print(f"Infix: {line}", end="")
